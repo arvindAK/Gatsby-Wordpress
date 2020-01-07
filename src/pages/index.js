@@ -6,12 +6,13 @@ import { graphql } from "gatsby"
 export default ({ data }) => {
   console.log(data)
   return (
-    <PrimaryLayout column="col-xs-6">
-      {data.allMarkdownRemark.nodes.map(node => (
+    <PrimaryLayout column="">
+      {data.allWordpressPost.nodes.map(node => (
         <Post
-          image={node.frontmatter.image}
-          title={node.frontmatter.title}
+          image={node.featured_media.source_url}
+          title={node.title}
           excerpt={node.excerpt}
+          readMore={node.slug}
         />
       ))}
     </PrimaryLayout>
@@ -20,16 +21,14 @@ export default ({ data }) => {
 
 export const query = graphql`
   {
-    allMarkdownRemark {
+    allWordpressPost {
       nodes {
-        frontmatter {
-          title
-          date
-          keywords
-          image
-        }
+        slug
+        title
         excerpt
-        html
+        featured_media {
+          source_url
+        }
       }
     }
   }
